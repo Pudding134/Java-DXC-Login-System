@@ -5,8 +5,8 @@
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-
 <?import javafx.geometry.Insets?>
+
 <VBox fx:id="mainView" alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
       fx:controller="dxc.loginsystem.MainViewController">
     <padding>
@@ -14,5 +14,6 @@
     </padding>
 
     <Label fx:id="welcomeLabel" text="Welcome!"/>
+    <Button fx:id="restrictedButton" text="Restricted Page" onAction="#onRestrictedButtonClick"/>
     <Button fx:id="logoutButton" text="Logout" onAction="#onLogoutButtonClick"/>
 </VBox>

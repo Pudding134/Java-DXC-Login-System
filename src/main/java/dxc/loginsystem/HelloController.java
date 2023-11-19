@@ -55,8 +55,8 @@ public class HelloController {
 
     private boolean authenticate(String username, String password) {
         // Placeholder for authentication logic
-        if(username.equals("admin") && password.equals("admin")) {
-            notificationMessage.setText("Login successful! Welcome to JavaFX Application!");
+        if((username.equals("admin") && password.equals("admin")) || (username.equals("willie") && password.equals("willie"))) {
+            //notificationMessage.setText("Login successful! Welcome to JavaFX Application!");
             return true;
         }
         return false;
