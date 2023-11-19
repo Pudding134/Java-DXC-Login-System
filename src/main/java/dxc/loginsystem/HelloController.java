@@ -1,9 +1,15 @@
 package dxc.loginsystem;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class HelloController {
     @FXML
@@ -13,6 +19,9 @@ public class HelloController {
     @FXML
     private PasswordField passwordField;
 
+    private Stage stage;
+    private Scene scene;
+    private Parent root;
 
     @FXML
     protected void onLoginButtonClick() {
@@ -22,9 +31,30 @@ public class HelloController {
         if (isAuthenticated) {
             notificationMessage.setText("Login successful!");
             // Here you would transition to the main application view
-        } else {
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("main-view.fxml"));
+                root = loader.load();
+
+                // Set user information on the main view
+                MainViewController mainViewController = loader.getController();
+                mainViewController.setUserInformation(username);
+
+                // Switch to main application view
+                stage = (Stage) (usernameField.getScene().getWindow());
+                // Get current stage size
+                double width = stage.getWidth();
+                double height = stage.getHeight();
+                scene = new Scene(root, width, height);
+                stage.setScene(scene);
+                stage.show();
+            } catch (IOException e) {
+                e.printStackTrace();
+                notificationMessage.setText("Failed to load the main view.");
+            }
+        }else{
             notificationMessage.setText("Invalid username or password.");
-        }    }
+        }
+    }
 
     private boolean authenticate(String username, String password) {
         // Placeholder for authentication logic

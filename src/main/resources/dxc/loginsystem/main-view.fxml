@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<?import javafx.geometry.Insets?>
+<VBox fx:id="mainView" alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="dxc.loginsystem.MainViewController">
+    <padding>
+        <Insets bottom="70.0" left="100.0" right="100.0" top="70.0"/>
+    </padding>
+
+    <Label fx:id="welcomeLabel" text="Welcome!"/>
+    <Button fx:id="logoutButton" text="Logout" onAction="#onLogoutButtonClick"/>
+</VBox>
