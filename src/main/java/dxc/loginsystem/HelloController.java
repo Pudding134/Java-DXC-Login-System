@@ -41,10 +41,7 @@ public class HelloController {
 
                 // Switch to main application view
                 stage = (Stage) (usernameField.getScene().getWindow());
-                // Get current stage size
-                double width = stage.getWidth();
-                double height = stage.getHeight();
-                scene = new Scene(root, width, height);
+                scene = new Scene(root, 500, 400);
                 stage.setScene(scene);
                 stage.show();
             } catch (IOException e) {
