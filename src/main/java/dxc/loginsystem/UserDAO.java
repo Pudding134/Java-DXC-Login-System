@@ -7,6 +7,7 @@ public class UserDAO {
     private String userLogin = "root";
     private String password = "password";
 
+
     // Method to add a new user
     public void createUser(User user) {
         // Implement JDBC code to insert user into the database
@@ -39,24 +40,29 @@ public class UserDAO {
         User user = null;
 
         String sqlStatement = "SELECT * FROM users WHERE username = ?";
-        try {
-            Connection connection = DriverManager.getConnection(dbURL, userLogin, password);
-            PreparedStatement preparedStatement = connection.prepareStatement(sqlStatement);
-            preparedStatement.setString(1, username);
-            ResultSet resultSet = preparedStatement.executeQuery();
+        try (Connection connection = DriverManager.getConnection(dbURL, userLogin, password);
+             PreparedStatement preparedStatement = connection.prepareStatement(sqlStatement)) {
 
-            while (resultSet.next()) {
-                String retrievedUsername = resultSet.getString("username");
-                String retrievedPassword = resultSet.getString("hashedPassword");
-                int retrievedRole_id = resultSet.getInt("role_id");
-                UserRole role = UserRole.fromRoleId(retrievedRole_id);
-                user = new User(retrievedUsername, retrievedPassword, role);
+            preparedStatement.setString(1, username);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    String retrievedUsername = resultSet.getString("username");
+                    String retrievedPassword = resultSet.getString("hashedPassword");
+                    int retrievedRole_id = resultSet.getInt("role_id");
+                    UserRole role = UserRole.fromRoleId(retrievedRole_id);
+                    user = new User(retrievedUsername, retrievedPassword, role);
+                }
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+        if (user == null) {
+            System.out.println("No user found with username: " + username);
+        }
         return user;
     }
+
 
     // Method to update a user
     public void updateUser(User user) {
