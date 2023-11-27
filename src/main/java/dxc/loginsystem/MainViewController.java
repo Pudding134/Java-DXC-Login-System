@@ -39,12 +39,11 @@ public class MainViewController {
         Utilities.logout(stage);
     }
 
-    public void setUserInformation(String username) {
-        // This method can be used to set user information on the welcome label
-        welcomeLabel.setText("Welcome, " + username + "!");
+    public void setUserInformation(User loginUser) {
+        welcomeLabel.setText("Welcome, " + loginUser.getUserName() + "!");
 
         // Show the restricted page button only if the user is "admin"
-        restrictedButton.setVisible("admin".equals(username));
+        restrictedButton.setVisible(loginUser.getRole() == UserRole.ADMIN);
     }
 
     @FXML
