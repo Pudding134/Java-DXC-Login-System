@@ -7,6 +7,16 @@ public class UserDAO {
     private String userLogin = "root";
     private String password = "password";
 
+    public static void main(String[] args){
+        UserDAO userDAO = new UserDAO();
+        User newUser = new User("admin", "testPassword", UserRole.ADMIN);
+        userDAO.createUser(newUser);
+        User newUser2 = new User("willie", "password", UserRole.USER);
+        userDAO.createUser(newUser2);
+        User retrievedUser = userDAO.getUser("willie");
+        User retrievedUser1 = userDAO.getUser("admin");
+
+    }
 
     // Method to add a new user
     public void createUser(User user) {
@@ -18,7 +28,7 @@ public class UserDAO {
             preparedStatement.setString(1, user.getUserName());
             String hashedPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
             preparedStatement.setString(2, hashedPassword);
-            if( user.getRole().equals("admin") ){
+            if( user.getRole() == UserRole.ADMIN ){
                 preparedStatement.setInt(3, 0);
             }else{
                 preparedStatement.setInt(3, 1);
